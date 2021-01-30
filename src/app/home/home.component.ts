@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup,ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',

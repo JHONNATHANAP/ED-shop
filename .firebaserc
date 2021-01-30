@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "shop-dfe69": {
+      "hosting": {
+        "shop": [
+          "shop-dfe69"
+        ]
+      }
+    }
+  }
+}

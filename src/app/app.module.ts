@@ -1,3 +1,4 @@
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -15,6 +16,12 @@ import { LoginComponent } from './login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { environment } from './../environments/environment';
+
+import {AngularFireModule} from '@angular/fire';
+import {AngularFireAuthModule} from '@angular/fire/auth';
+import { RegisterComponent } from './register/register.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,14 +35,20 @@ import { HomeComponent } from './home/home.component';
     OrderSuccessComponent,
     ShoppingCartComponent,
     MyOrdersComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,    
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot([
       {path:'',component: HomeComponent},
+      {path:'register',component: RegisterComponent},
       {path:'products',component: ProductsComponent},
       {path:'shopping-cart',component: ShoppingCartComponent},
       {path:'check-out',component: CheckOutComponent},
