@@ -41,6 +41,8 @@ import { environment } from 'src/environments/environment';
     BrowserModule,
     AppRoutingModule,
     NgbModalModule,
+    FormsModule,
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     RouterModule.forRoot([
