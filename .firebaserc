@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "appshop-ee25a": {
+      "hosting": {
+        "appshop": [
+          "appshop-ee25a"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "appshop-ee25a"
+  }
+}
