@@ -23,6 +23,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './auth/service/auth.service';
 import { AuthGuardService } from './auth/auth-guard.service';
+import { UserService } from './auth/user.service';
+import { AdminAuthGuardService } from './auth/admin-auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -58,12 +60,12 @@ import { AuthGuardService } from './auth/auth-guard.service';
       {path:'order-success',component: OrderSuccessComponent,canActivate:[AuthGuardService]},
       {path:'my/orders',component: MyOrdersComponent,canActivate:[AuthGuardService]},
 
-      {path:'admin/products',component: AdminProductsComponent},
-      {path:'admin/orders',component: AdminOrdersComponent}      
+      {path:'admin/products',component: AdminProductsComponent,canActivate:[AuthGuardService,AdminAuthGuardService]},
+      {path:'admin/orders',component: AdminOrdersComponent,canActivate:[AuthGuardService,AdminAuthGuardService]}      
     ]),
     NgbModule
   ],
-  providers: [AuthService,AuthGuardService],
+  providers: [AuthService,AuthGuardService,UserService,AdminAuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
