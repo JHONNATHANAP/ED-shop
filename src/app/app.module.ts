@@ -21,6 +21,8 @@ import {AngularFireModule} from '@angular/fire';
 import {AngularFireAuth, AngularFireAuthModule} from '@angular/fire/auth';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import { AuthService } from './auth/service/auth.service';
+import { AuthGuardService } from './auth/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -50,16 +52,18 @@ import { environment } from 'src/environments/environment';
       {path:'register',component: RegisterComponent},
       {path:'products',component: ProductsComponent},
       {path:'shopping-cart',component: ShoppingCartComponent},
-      {path:'check-out',component: CheckOutComponent},
-      {path:'order-success',component: OrderSuccessComponent},
-      {path:'my/orders',component: MyOrdersComponent},
       {path:'login',component: LoginComponent},
+
+      {path:'check-out',component: CheckOutComponent,canActivate:[AuthGuardService]},
+      {path:'order-success',component: OrderSuccessComponent,canActivate:[AuthGuardService]},
+      {path:'my/orders',component: MyOrdersComponent,canActivate:[AuthGuardService]},
+
       {path:'admin/products',component: AdminProductsComponent},
       {path:'admin/orders',component: AdminOrdersComponent}      
     ]),
     NgbModule
   ],
-  providers: [],
+  providers: [AuthService,AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
