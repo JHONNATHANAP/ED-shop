@@ -11,7 +11,7 @@ import { Product } from 'src/app/models/product';
 })
 export class ProductFormComponent implements OnInit {
   categories$;
-  product:Product;
+  product={title:null,price:null,category:null,imageUrl:null};
   id;
 
   constructor(
@@ -27,6 +27,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+   
   }
   save (product){
     if(this.id) this.productService.update(this.id,product);

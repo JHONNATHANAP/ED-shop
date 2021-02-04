@@ -1,6 +1,10 @@
 {
   "hosting": {
-    "public": "dist/appshop"
+    "public": "dist/appshop",
+    "rewrites": [ {
+      "source": "**",
+      "destination": "/index.html"
+    } ]
 
   }
 }
