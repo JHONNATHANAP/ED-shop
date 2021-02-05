@@ -30,6 +30,8 @@ import { ProductFormComponent } from './admin/product-form/product-form.componen
 import { CategoryService } from './manage/category.service';
 import { ProductService } from './manage/product.service';
 import { CustomFormsModule } from 'ng2-validation';
+import { ProductFilterComponent } from './products/product-filter/product-filter.component';
+import { ProductCardComponent } from './product-card/product-card.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { CustomFormsModule } from 'ng2-validation';
     MyOrdersComponent,
     RegisterComponent,
     AdminOrdersComponent,
-    ProductFormComponent
+    ProductFormComponent,
+    ProductFilterComponent,
+    ProductCardComponent
     
   ],
   imports: [
@@ -58,7 +62,7 @@ import { CustomFormsModule } from 'ng2-validation';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     RouterModule.forRoot([
-      {path:'',component: HomeComponent},
+      {path:'',component: ProductsComponent},
       {path:'register',component: RegisterComponent},
       {path:'products',component: ProductsComponent},
       {path:'shopping-cart',component: ShoppingCartComponent},

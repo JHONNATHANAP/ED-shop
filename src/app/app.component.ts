@@ -16,7 +16,7 @@ export class AppComponent {
       let returnUrl= localStorage.getItem('returnUrl')
       if(!returnUrl) return;
       localStorage.removeItem('returnUrl');
-      router.navigateByUrl(returnUrl)
+      //router.navigateByUrl(returnUrl)
         
      
       
