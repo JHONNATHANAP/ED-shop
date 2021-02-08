@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';
 import { Product } from 'shared/models/product';
 import 'rxjs/add/operator/take'
 import 'rxjs/operators/map';
 import { map } from 'rxjs/operators';
 import { ItemShaopCart } from 'shared/models/item-shoop-cart';
+import { Observable } from 'rxjs';
+import { ShoppingCart } from 'shared/models/shopping-cart';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,8 +18,10 @@ export class ShoppingCartService {
       dataCreated:new Date().getTime()
     })
   }
-  private getCart(cartId:string){
-    return this.db.object('/shopping-carts/'+cartId);
+  public getCart():Observable<ShoppingCart>{
+    let cartId= this.getOrCreateCart()
+    return this.db.object('/shopping-carts/'+cartId).valueChanges()
+      .map((x:ShoppingCart)=>new ShoppingCart(x.items));
   }
   private getOrCreateCart(){
     let cartId=localStorage.getItem('cartId')
@@ -35,19 +39,24 @@ export class ShoppingCartService {
   }
 
 
+  public removeFromCart(product:Product){
+    this.updateItemQUantity(product,-1)
+  }
 
-  addToCart(product:Product){
-    console.log(product)
+  public addToCart(product:Product){
+    this.updateItemQUantity(product,1)
+  }
+
+  private updateItemQUantity(product:Product,change:number){
     let cartId= this.getOrCreateCart();
     let item$$=  this.getItem(cartId, product.$key);
-    let item$= this.getItem(cartId, product.$key).valueChanges()
+    let item$= item$$.valueChanges()
     item$.take(1).subscribe((item:ItemShaopCart) => {
-      if(item!=null) item$$.update({quantity:item.quantity+1})
-      else item$$.set({product:{title: product.title,
+        q:Number;
+        item$$.update({product:{title: product.title,
         price: product.price,
         category: product.category,
-        imageUrl: product.imageUrl},quantity:1}) 
+        imageUrl: product.imageUrl},quantity:(item? item.quantity : 0)+change}) 
     });
-
   }
 }

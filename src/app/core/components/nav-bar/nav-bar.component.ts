@@ -3,6 +3,10 @@ import { AuthService } from '../../../shared/services/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import *  as firebase from "firebase"
 import { AppUser } from '../../../shared/models/app-user';
+import { ShoppingCartService } from 'shared/services/shopping-cart.service';
+import { Observable } from 'rxjs';
+import { ShoppingCart } from 'shared/models/shopping-cart';
+import { AngularFireObject } from '@angular/fire/database';
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
@@ -11,7 +15,10 @@ import { AppUser } from '../../../shared/models/app-user';
 export class NavBarComponent implements OnInit {
   user:firebase.default.User;
   appUser:AppUser;
-  constructor(public auth:AuthService) { 
+  cart$:Observable<ShoppingCart>
+  constructor(public auth:AuthService, private shoppingCartService: ShoppingCartService) { 
+
+    this.cart$= this.shoppingCartService.getCart();
  
   }
 

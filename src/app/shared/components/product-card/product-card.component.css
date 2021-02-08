@@ -5,3 +5,7 @@
     padding: 0 !important;
     margin-top: 10px;
 }
+
+.card-footer button{
+    cursor: pointer;
+}
