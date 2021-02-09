@@ -21,7 +21,7 @@ export class ShoppingCartService {
   public getCart():Observable<ShoppingCart>{
     let cartId= this.getOrCreateCart()
     return this.db.object('/shopping-carts/'+cartId).valueChanges()
-      .map((x:ShoppingCart)=>new ShoppingCart(x.items));
+      .map((x:{items,totalItemsCount})=>new ShoppingCart(x? x.items:[]));
   }
   private getOrCreateCart(){
     let cartId=localStorage.getItem('cartId')
@@ -47,16 +47,25 @@ export class ShoppingCartService {
     this.updateItemQUantity(product,1)
   }
 
+  public clearCart(){
+    let cartId=this.getOrCreateCart();
+    this.db.object('/shopping-carts/' + cartId + '/items/').remove();
+  }
+
   private updateItemQUantity(product:Product,change:number){
     let cartId= this.getOrCreateCart();
     let item$$=  this.getItem(cartId, product.$key);
     let item$= item$$.valueChanges()
     item$.take(1).subscribe((item:ItemShaopCart) => {
         q:Number;
-        item$$.update({product:{title: product.title,
+        let quantity=(item? item.quantity : 0)+change
+        if(quantity===0)item$$.remove();
+        else item$$.update({title: product.title,
         price: product.price,
         category: product.category,
-        imageUrl: product.imageUrl},quantity:(item? item.quantity : 0)+change}) 
+        imageUrl: product.imageUrl,
+        quantity:quantity}) 
     });
   }
+
 }
